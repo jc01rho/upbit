@@ -7,22 +7,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Set up Go 1.13
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.13
-      id: go
+      - name: Set up Go 1.21
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.22
+        id: go
 
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v1
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
 
-    - name: Get dependencies
-      run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-        fi
 
-    - name: Build
-      run: go build -v .
+      - name: Build
+        run: go build -v .
+
+      - name: semantic version
+        id: semantic_version
+        uses: paulhatch/semantic-version@v5.3.0
+        with:
+          # The prefix to use to identify tags
+         tag_prefix: "v"
+         # A string which, if present in a git commit, indicates that a change represents a
+         # major (breaking) change, supports regular expressions wrapped with '/'
+         major_pattern: "(MAJOR)"
+         # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
+         minor_pattern: "(MINOR)"
+         # A string to determine the format of the version outpRut
+         format: "v${major}.${minor}.${patch}"
+         # Optional path to check for changes. If any changes are detected in the path the
+         # 'changed' output will true. Enter multiple paths separated by spaces.
+         #change_path: "src/my-service"
+         # Named version, will be used as suffix for name version tag
+         #namespace: alpssh
+         # Indicate whether short tags like 'v1' should be supported. If false only full
+         # tags like 'v1.0.0' will be recognized.
+         short_tags: true
+         # If this is set to true, *every* commit will be treated as a new version.
+         bump_each_commit: true
+

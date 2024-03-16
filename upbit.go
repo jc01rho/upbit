@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strings"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
 )
 

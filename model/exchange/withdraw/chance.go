@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/sangx2/upbit/model/exchange/account"
+	"github.com/jc01rho/upbit/model/exchange/account"
 )
 
 // Chance : 출금 가능 정보

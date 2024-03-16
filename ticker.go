@@ -2,8 +2,8 @@ package upbit
 
 import (
 	"fmt"
-	"github.com/sangx2/upbit/model"
-	"github.com/sangx2/upbit/model/quotation"
+	"github.com/jc01rho/upbit/model"
+	"github.com/jc01rho/upbit/model/quotation"
 	"net/url"
 )
 

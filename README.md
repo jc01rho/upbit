@@ -10,7 +10,7 @@ upbit-go 는 [upbit api](https://docs.upbit.com/)를 이용한 라이브러리 �
 ### 설치
 
 ```bash
-go get -u github.com/sangx2/upbit
+go get -u github.com/jc01rho/upbit
 ```
 
 ## Getting started
@@ -25,7 +25,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/sangx2/upbit"
+	"github.com/jc01rho/upbit"
 )
 
 func main() {
@@ -53,7 +53,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/sangx2/upbit"
+	"github.com/jc01rho/upbit"
 )
 
 func main() {

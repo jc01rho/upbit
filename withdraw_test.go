@@ -1,7 +1,7 @@
 package upbit
 
 import (
-	"github.com/sangx2/upbit/model/exchange"
+	"github.com/jc01rho/upbit/model/exchange"
 	"testing"
 )
 

@@ -2,9 +2,9 @@ package upbit
 
 import (
 	"fmt"
-	"github.com/sangx2/upbit/model"
-	"github.com/sangx2/upbit/model/exchange"
-	"github.com/sangx2/upbit/model/exchange/withdraw"
+	"github.com/jc01rho/upbit/model"
+	"github.com/jc01rho/upbit/model/exchange"
+	"github.com/jc01rho/upbit/model/exchange/withdraw"
 	"net/url"
 	"strconv"
 )

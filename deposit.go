@@ -3,9 +3,9 @@ package upbit
 import (
 	"bytes"
 	"fmt"
-	"github.com/sangx2/upbit/model"
-	"github.com/sangx2/upbit/model/exchange"
-	"github.com/sangx2/upbit/model/exchange/deposit"
+	"github.com/jc01rho/upbit/model"
+	"github.com/jc01rho/upbit/model/exchange"
+	"github.com/jc01rho/upbit/model/exchange/deposit"
 	"io/ioutil"
 	"net/url"
 	"strconv"

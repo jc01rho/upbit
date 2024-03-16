@@ -4,7 +4,7 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
-	"github.com/sangx2/upbit/model"
+	"github.com/jc01rho/upbit/model"
 	"hash"
 	"net/http"
 	"net/url"

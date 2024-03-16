@@ -2,9 +2,9 @@ package upbit
 
 import (
 	"fmt"
-	"github.com/sangx2/upbit/model"
-	"github.com/sangx2/upbit/model/exchange"
-	"github.com/sangx2/upbit/model/exchange/order"
+	"github.com/jc01rho/upbit/model"
+	"github.com/jc01rho/upbit/model/exchange"
+	"github.com/jc01rho/upbit/model/exchange/order"
 	"net/url"
 )
 
@@ -318,7 +318,6 @@ func (u *Upbit) SellOrder(market, volume, price, orderType, identifier string) (
 // [QUERY PARAMS]
 //
 // uuid : REQUIRED. 주문 UUID
-//
 func (u *Upbit) CancelOrder(uuid, identifier string) (*order.Order, *model.Remaining, error) {
 	if (len(uuid) + len(identifier)) == 0 {
 		return nil, nil, fmt.Errorf("invalid args")

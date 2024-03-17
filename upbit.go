@@ -18,7 +18,7 @@ import (
 
 const (
 	BaseURI = "https://api.upbit.com/v1"
-	WSSURI  = "wss://api.upbit.com/websocket/v1"
+	WSSURI  = "wss://api.upbit.com/upbitWebsocket/v1"
 )
 
 // Upbit :

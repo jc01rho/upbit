@@ -2,10 +2,13 @@ package upbit
 
 import (
 	"fmt"
+	"github.com/gorilla/websocket"
 	"log"
 	"net/url"
+	"time"
 	"upbit/model"
 	"upbit/model/quotation"
+	"upbit/model/upbitWebsocket"
 )
 
 // GetTickers 현재가 정보. 최대 100개의 정보를 반환
@@ -13,50 +16,54 @@ import (
 // [QUERY PARAMS]
 //
 // markets : REQUIRED. 마켓 코드 목록 (ex. KRW-BTC,BTC-BCC)
-func (u *Upbit) GetTickersWS(markets []string) ([]*quotation.TickerWebSocket, error) {
+func (u *Upbit) _getWS(ticketName string, markets []string) *websocket.Conn {
+	c, _ := u.createWebSocket()
+
+	if err := c.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+		log.Fatalf("Ping attempt but WS closed: %v", err)
+
+	}
+	//defer tictiemTickerker.Stop()
+
+	//_ = c.WriteJSON(_createWSRequestBody(ticketName, upbitWebsocket.TICKER, markets))
+
+	return c
+
+}
+
+// call with goroutine
+func (u *Upbit) _processWS(websocketConn *websocket.Conn, ticketName string, markets []string) {
+	defer websocketConn.Close()
+
+	for {
+		_, message, err := websocketConn.ReadMessage()
+		if err != nil {
+			log.Println("read:", err)
+			break
+		}
+		log.Printf("recv: %s", message)
+	}
+
+}
+
+func (u *Upbit) GetTickersWSChannel(markets []string) ([]*quotation.Ticker, *model.Remaining, error) {
+
+}
+
+func (u *Upbit) GetTickersWSProcess() {
+
+}
+
+func (u *Upbit) GetTickersWSBlockingStringStreamForlogging(ticketName string, markets []string) ([]*quotation.TickerWebSocket, error) {
 	if len(markets) == 0 || markets == nil {
 		return nil, fmt.Errorf("invalid markets")
 	}
 
-	//api, e := GetApiInfo(FuncGetTickersWS)
-	//if e != nil {
-	//	return nil, e
-	//}
-	//
-	//var values = url.Values{
-	//	"markets": markets,
-	//}
-	//
-	//req, e := u.createRequest(api.Method, BaseURI+api.Url, values, api.Section)
-	//if e != nil {
-	//	return nil, e
-	//}
-	//
-	//resp, e := u.do(req, api.Group)
-	//if e != nil {
-	//	return nil, e
-	//}
-	//defer resp.Body.Close()
 	c, _ := u.createWebSocket()
 
-	wsReqList := make([]interface{}, 0)
-	wsReqList = append(wsReqList, &model.WebSocketTicket{
-
-		Ticket: "ticker",
-	})
-	wsReqList = append(wsReqList, &model.WebSocketType{
-
-		Type:           "ticker",
-		Codes:          markets,
-		IsOnlySnapshot: nil,
-		IsOnlyRealtime: nil,
-	})
-
-	//c.SetReadDeadline(time.Now().Add(1))
-	//c.SetPongHandler(func(string) error { c.SetReadDeadline(time.Now().Add(1)); return nil })
-
-	c.WriteMessage(1, []byte("PING"))
-	c.WriteJSON(wsReqList)
+	ticker := time.NewTicker(time.Second * 60)
+	defer ticker.Stop()
+	_ = c.WriteJSON(_createWSRequestBody(ticketName, upbitWebsocket.TICKER, markets))
 
 	done := make(chan struct{})
 	go func() {
@@ -77,14 +84,15 @@ func (u *Upbit) GetTickersWS(markets []string) ([]*quotation.TickerWebSocket, er
 		select {
 		case <-done:
 			return nil, nil
+		case <-ticker.C:
+			if err := c.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+				log.Fatalf("Ping attempt but WS closed: %v", err)
+
+			}
+
 		}
 
 	}
-
-	//tickers, e := quotation.TickerWSsFromJSON(resp.Body)
-	//if e != nil {
-	//	return nil, e
-	//}
 
 	return nil, nil
 }

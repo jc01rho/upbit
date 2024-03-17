@@ -33,7 +33,7 @@ const (
 	FuncGetMonthCandles            = "GetMonthCandles"
 	FuncGetTradeTicks              = "GetTradeTicks"
 	FuncGetTickers                 = "GetTickers"
-	FuncGetTickersWS               = "GetTickersWS"
+	FuncGetTickersWS               = "GetTickersWSBlockingStringStreamForlogging"
 	FuncGetOrderbooks              = "GetOrderbooks"
 
 	RouteAccounts                    = "/accounts"

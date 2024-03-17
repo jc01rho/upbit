@@ -1,8 +1,8 @@
 package upbit
 
 import (
-	"github.com/jc01rho/upbit/model"
-	"github.com/jc01rho/upbit/model/exchange/account"
+	"upbit/model"
+	"upbit/model/exchange/account"
 )
 
 // GetAccounts 전체 계좌 조회

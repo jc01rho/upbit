@@ -1,5 +1,15 @@
 name: Go
-on: [push]
+
+on:
+  push:
+    branches:
+      - master  # Support wildcard matching
+#    - comma2_Eon-final # no more comma2,,,
+  pull_request_target:
+    branches:
+      - master  # Support wildcard matching
+
+
 jobs:
 
   build:

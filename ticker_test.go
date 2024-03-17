@@ -15,3 +15,16 @@ func TestTicker(t *testing.T) {
 		}
 	}
 }
+
+func TestTickerWS(t *testing.T) {
+	u := NewUpbit("", "")
+
+	tickers, e := u.GetTickersWS([]string{marketID})
+	if e != nil {
+		t.Fatalf("%s's GetTickersWS error : %s", marketID, e.Error())
+	} else {
+		for _, ticker := range tickers {
+			t.Logf("%+v", *ticker)
+		}
+	}
+}

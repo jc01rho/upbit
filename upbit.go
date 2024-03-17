@@ -4,11 +4,13 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
-	"github.com/jc01rho/upbit/model"
+	"github.com/gorilla/websocket"
 	"hash"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
+	"upbit/model"
 
 	jwt "github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
@@ -16,6 +18,7 @@ import (
 
 const (
 	BaseURI = "https://api.upbit.com/v1"
+	WSSURI  = "wss://api.upbit.com/websocket/v1"
 )
 
 // Upbit :
@@ -34,6 +37,8 @@ type Upbit struct {
 	crixTradesClient *http.Client // Group:crix-trades Min:600 Sec:10
 	tickerClient     *http.Client // Group:ticker Min:600 Sec:10
 	orderbookClient  *http.Client // Group:orderbook Min:600 Sec:10
+
+	wsTicketClient *websocket.Conn
 }
 
 // NewUpbit :
@@ -51,7 +56,32 @@ func NewUpbit(accessKey, secretKey string) *Upbit {
 		crixTradesClient: &http.Client{},
 		tickerClient:     &http.Client{},
 		orderbookClient:  &http.Client{},
+
+		wsTicketClient: &websocket.Conn{},
 	}
+}
+func (u *Upbit) createWebSocket() (*websocket.Conn, error) {
+
+	url := url.URL{Scheme: "wss", Host: "api.upbit.com", Path: "/websocket/v1"}
+
+	log.Print(url.String())
+	claim := jwt.MapClaims{
+		"access_key": u.accessKey,
+		"nonce":      uuid.New().String(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+	signedToken, e := token.SignedString([]byte(u.secretKey[:]))
+	if e != nil {
+		return nil, nil
+	}
+
+	//request.Header.Add("Authorization", "Bearer "+signedToken)
+	header := http.Header{"Authorization": {"Bearer " + signedToken}}
+	c, _, err := websocket.DefaultDialer.Dial(url.String(), header)
+
+	//log.Print(https)
+	return c, err
+
 }
 
 func (u *Upbit) createRequest(method, url string, values url.Values, section string) (*http.Request, error) {
@@ -127,6 +157,7 @@ func (u *Upbit) do(request *http.Request, apiGroup string) (*http.Response, erro
 		client = u.tickerClient
 	case ApiGroupOrderbook:
 		client = u.orderbookClient
+
 	default:
 		return nil, fmt.Errorf("invalid api group")
 	}

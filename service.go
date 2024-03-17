@@ -1,8 +1,8 @@
 package upbit
 
 import (
-	"github.com/jc01rho/upbit/model"
-	"github.com/jc01rho/upbit/model/exchange/service"
+	"upbit/model"
+	"upbit/model/exchange/service"
 )
 
 // GetWalletStatus 입출금 현황

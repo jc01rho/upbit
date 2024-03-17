@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/jc01rho/upbit/model/exchange/account"
+	"upbit/model/exchange/account"
 )
 
 // Chance : 주문 가능 정보

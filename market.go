@@ -1,8 +1,8 @@
 package upbit
 
 import (
-	"github.com/jc01rho/upbit/model"
-	"github.com/jc01rho/upbit/model/quotation"
+	"upbit/model"
+	"upbit/model/quotation"
 )
 
 // GetMarkets 마켓 코드 조회

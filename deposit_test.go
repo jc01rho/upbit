@@ -1,8 +1,8 @@
 package upbit
 
 import (
-	"github.com/jc01rho/upbit/model/exchange"
 	"testing"
+	"upbit/model/exchange"
 )
 
 func TestDeposit(t *testing.T) {

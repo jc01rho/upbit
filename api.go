@@ -33,6 +33,7 @@ const (
 	FuncGetMonthCandles            = "GetMonthCandles"
 	FuncGetTradeTicks              = "GetTradeTicks"
 	FuncGetTickers                 = "GetTickers"
+	FuncGetTickersWS               = "GetTickersWS"
 	FuncGetOrderbooks              = "GetOrderbooks"
 
 	RouteAccounts                    = "/accounts"
@@ -71,7 +72,9 @@ const (
 	ApiGroupCandles      = "candles"
 	ApiGroupCrixTrades   = "crix-trades"
 	ApiGroupTicker       = "ticker"
-	ApiGroupOrderbook    = "orderbook"
+
+	ApiGroupOrderbook = "orderbook"
+	ApigroupTicketWS  = "ticker-ws"
 )
 
 type ApiInfo struct {
@@ -214,6 +217,11 @@ func GetApiInfo(funcName string) (*ApiInfo, error) {
 		return &ApiInfo{
 			Method: http.MethodGet, Url: RouteTicker,
 			Section: ApiSectionQuotation, Group: ApiGroupTicker,
+		}, nil
+	case FuncGetTickersWS: //현재가 정보 WebSocket
+		return &ApiInfo{
+			Method: "", Url: "",
+			Section: ApiSectionQuotation, Group: ApigroupTicketWS,
 		}, nil
 	case FuncGetOrderbooks: //호가 정보 조회
 		return &ApiInfo{

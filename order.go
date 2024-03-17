@@ -2,10 +2,10 @@ package upbit
 
 import (
 	"fmt"
-	"github.com/jc01rho/upbit/model"
-	"github.com/jc01rho/upbit/model/exchange"
-	"github.com/jc01rho/upbit/model/exchange/order"
 	"net/url"
+	"upbit/model"
+	"upbit/model/exchange"
+	"upbit/model/exchange/order"
 )
 
 // GetOrderChance 주문 가능 정보

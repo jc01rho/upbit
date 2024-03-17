@@ -2,11 +2,11 @@ package upbit
 
 import (
 	"fmt"
-	"github.com/jc01rho/upbit/model"
-	"github.com/jc01rho/upbit/model/exchange"
-	"github.com/jc01rho/upbit/model/exchange/withdraw"
 	"net/url"
 	"strconv"
+	"upbit/model"
+	"upbit/model/exchange"
+	"upbit/model/exchange/withdraw"
 )
 
 // GetWithdraws 출금 리스트 조회

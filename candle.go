@@ -2,9 +2,9 @@ package upbit
 
 import (
 	"fmt"
-	"github.com/jc01rho/upbit/model"
-	"github.com/jc01rho/upbit/model/quotation"
 	"net/url"
+	"upbit/model"
+	"upbit/model/quotation"
 )
 
 // GetMinuteCandles 분 캔들
